@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createBooking } from '@/services';
-import { BookingFormData } from '@/types';
+import { BookingFormData, ValidationError } from '@/types';
 import { useBookingStore } from '@/store';
 
 interface UseCreateBookingOptions {
@@ -35,7 +35,7 @@ export const useCreateBooking = (options?: UseCreateBookingOptions) => {
       }, 5000);
     },
     
-    onError: (error: Error & { response?: { data?: { message?: string; errors?: string[] } } }) => {
+    onError: (error: Error & { response?: { data?: { message?: string; errors?: ValidationError[] } } }) => {
       // Extract error message and errors array from response
       const errorMsg = error.response?.data?.message || 'Failed to submit booking. Please try again.';
       const errors = error.response?.data?.errors || [];

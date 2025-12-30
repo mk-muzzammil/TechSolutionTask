@@ -11,7 +11,7 @@ export default function ClientsSection() {
   ];
 
   return (
-    <section className="py-12 md:py-20 bg-gray-50">
+    <section className="py-12 md:py-20 bg-gray-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 space-y-2">
           <p className="text-[#208F6A] text-sm md:text-base font-semibold uppercase tracking-wide">

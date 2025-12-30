@@ -13,7 +13,7 @@ export default function HeroSection({
   backgroundImage = 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1925'
 }: HeroSectionProps) {
   return (
-    <section className="relative h-[30vh] md:h-[35vh] lg:h-[40vh] flex items-center justify-center">
+    <section className="relative h-[30vh] md:h-[35vh] lg:h-[40vh] flex items-center">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -25,9 +25,9 @@ export default function HeroSection({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4">
+      <div className="relative z-10 text-left text-white container mx-auto px-4">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{title}</h1>
-        <div className="flex items-center justify-center gap-2 text-sm md:text-base">
+        <div className="flex items-center gap-2 text-sm md:text-base">
           <Link href="/" className="hover:text-[#208F6A] transition-colors">
             Home
           </Link>

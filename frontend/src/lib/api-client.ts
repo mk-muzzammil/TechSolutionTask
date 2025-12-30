@@ -13,6 +13,5 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
-// Add request/response interceptors here if needed
 
 export default apiClient;
