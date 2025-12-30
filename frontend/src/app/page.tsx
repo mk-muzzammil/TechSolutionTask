@@ -19,9 +19,11 @@ export default function Home() {
               View About Page
             </Button>
           </Link>
-          <Button className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] px-8 py-6 text-lg">
-            Book Now
-          </Button>
+          <Link href="/booking">
+            <Button className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] px-8 py-6 text-lg">
+              Book Now
+            </Button>
+          </Link>
         </div>
 
         <div className="pt-8 text-sm text-white/80">
