@@ -1,58 +1,32 @@
-'use client';
-
-import { useAppStore } from '@/store';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
-  const { isSidebarOpen, toggleSidebar } = useAppStore();
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-8 font-sans dark:from-gray-900 dark:to-gray-800">
-      <div className="max-w-3xl text-center space-y-6">
-        <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
-          ✅ Frontend Setup Complete
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#208F6A] to-[#1a7755] p-8 font-sans text-white">
+      <div className="max-w-3xl text-center space-y-8">
+        <h1 className="text-5xl md:text-6xl font-bold">
+          Welcome to <span className="text-[#ededed]">Floyland</span>
         </h1>
         
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-left">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
-            Configured Packages:
-          </h2>
-          
-          <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-            <li className="flex items-start">
-              <span className="mr-2">✅</span>
-              <div>
-                <strong>Axios:</strong> HTTP client configured with base URL and error handling
-              </div>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">✅</span>
-              <div>
-                <strong>TanStack React Query:</strong> Server state management with caching
-              </div>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">✅</span>
-              <div>
-                <strong>Zustand:</strong> Simple global state management
-              </div>
-            </li>
-          </ul>
+        <p className="text-xl md:text-2xl text-white/90">
+          Luxury Hotel & Resort
+        </p>
+
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Link href="/about">
+            <Button className="bg-white text-[#208F6A] hover:bg-gray-100 px-8 py-6 text-lg">
+              View About Page
+            </Button>
+          </Link>
+          <Button className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] px-8 py-6 text-lg">
+            Book Now
+          </Button>
         </div>
 
-        {/* Example Zustand usage */}
-        <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">
-            Zustand Store Example:
-          </h3>
-          <p className="text-gray-700 dark:text-gray-300 mb-3">
-            Sidebar is: <strong>{isSidebarOpen ? 'Open' : 'Closed'}</strong>
-          </p>
-          <button
-            onClick={toggleSidebar}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Toggle Sidebar
-          </button>
+        <div className="pt-8 text-sm text-white/80">
+          <p>✅ Frontend setup complete with:</p>
+          <p>Next.js 16 • TypeScript • Tailwind CSS • shadcn/ui • React Query • Zustand</p>
         </div>
       </div>
     </div>
