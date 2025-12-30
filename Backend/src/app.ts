@@ -3,6 +3,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config/config';
 import bookingRoutes from './Routes/booking.routes';
+import staffRoutes from './Routes/staff.routes';
 
 const app: Application = express();
 
@@ -30,6 +31,9 @@ app.get('/api', (req: Request, res: Response) => {
 
 // Booking routes
 app.use('/api/bookings', bookingRoutes);
+
+// Staff routes
+app.use('/api/staff', staffRoutes);
 
 // Add your routes here as you create them
 // Example: app.use('/api/users', userRoutes);

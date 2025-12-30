@@ -35,4 +35,9 @@ export const queryKeys = {
     lists: () => [...queryKeys.bookings.all, 'list'] as const,
     detail: (id: string) => [...queryKeys.bookings.all, 'detail', id] as const,
   },
+  staff: {
+    all: ['staff'] as const,
+    lists: () => [...queryKeys.staff.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.staff.all, 'detail', id] as const,
+  },
 } as const;

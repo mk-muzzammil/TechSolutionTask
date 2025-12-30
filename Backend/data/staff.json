@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Michael Dean hello",
+    "role": "Founder",
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400"
+  },
+  {
+    "id": "2",
+    "name": "Arnold Taylor G ",
+    "role": "Manager",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400"
+  },
+  {
+    "id": "3",
+    "name": "Sarah Johnson",
+    "role": "Chef",
+    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400"
+  },
+  {
+    "id": "4",
+    "name": "James Wilson",
+    "role": "Receptionist",
+    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400"
+  }
+]

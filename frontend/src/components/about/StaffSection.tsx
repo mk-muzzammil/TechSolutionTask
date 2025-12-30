@@ -1,29 +1,38 @@
+'use client';
+
 import Image from 'next/image';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { useStaff } from '@/hooks';
 
 export default function StaffSection() {
-  const staffMembers = [
-    {
-      name: 'Michael Dean',
-      role: 'Founder',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400',
-    },
-    {
-      name: 'Arnold Taylor',
-      role: 'Manager',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400',
-    },
-    {
-      name: 'Michael Dean',
-      role: 'Chef',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400',
-    },
-    {
-      name: 'Michael Dean',
-      role: 'Receptionist',
-      image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400',
-    },
-  ];
+  // Fetch staff data from backend
+  const { staff, isLoading, isError } = useStaff();
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-gray-600">Loading staff members...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-red-600">Failed to load staff members. Please try again later.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 md:py-20 bg-white">
@@ -38,8 +47,8 @@ export default function StaffSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {staffMembers.map((member, index) => (
-            <div key={index} className="group">
+          {staff.map((member) => (
+            <div key={member.id} className="group">
               <div className="relative overflow-hidden rounded-lg mb-4 aspect-[3/4]">
                 <Image
                   src={member.image}

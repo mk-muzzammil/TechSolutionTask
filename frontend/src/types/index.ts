@@ -44,4 +44,12 @@ export interface ApiResponse<T> {
   errors?: string[];
 }
 
+// Staff Types
+export interface Staff {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+}
+
 // Add your custom types here as needed
