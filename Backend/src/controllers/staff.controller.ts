@@ -1,13 +1,14 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs/promises';
+import { AppError } from '../middlewares/errorHandler';
 
 /**
  * @desc    Get all staff members
  * @route   GET /api/staff
  * @access  Public
  */
-export const getAllStaff = async (req: Request, res: Response) => {
+export const getAllStaff = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Read staff data from JSON file
     const staffFilePath = path.join(__dirname, '../../data/staff.json');
@@ -20,12 +21,7 @@ export const getAllStaff = async (req: Request, res: Response) => {
       data: staff,
     });
   } catch (error: unknown) {
-    console.error('Error fetching staff:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Unable to fetch staff members.',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
+    next(error);
   }
 };
 
@@ -34,7 +30,7 @@ export const getAllStaff = async (req: Request, res: Response) => {
  * @route   GET /api/staff/:id
  * @access  Public
  */
-export const getStaffById = async (req: Request, res: Response) => {
+export const getStaffById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
 
@@ -47,10 +43,7 @@ export const getStaffById = async (req: Request, res: Response) => {
     const staff = staffList.find((member: { id: string }) => member.id === id);
 
     if (!staff) {
-      return res.status(404).json({
-        success: false,
-        message: 'Staff member not found',
-      });
+      return next(new AppError('Staff member not found', 404));
     }
 
     res.status(200).json({
@@ -58,11 +51,6 @@ export const getStaffById = async (req: Request, res: Response) => {
       data: staff,
     });
   } catch (error: unknown) {
-    console.error('Error fetching staff member:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Unable to fetch staff member.',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
+    next(error);
   }
 };

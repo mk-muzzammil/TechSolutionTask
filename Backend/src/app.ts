@@ -5,6 +5,7 @@ import { config } from './config/config';
 import bookingRoutes from './Routes/booking.routes';
 import staffRoutes from './Routes/staff.routes';
 import hotelRoutes from './Routes/hotel.routes';
+import { errorHandler, notFound } from './middlewares/errorHandler';
 
 const app: Application = express();
 
@@ -41,5 +42,11 @@ app.use('/api/hotels', hotelRoutes);
 
 // Add your routes here as you create them
 // Example: app.use('/api/users', userRoutes);
+
+// 404 Not Found handler - must be after all routes
+app.use(notFound);
+
+// Global Error Handler - must be last middleware
+app.use(errorHandler);
 
 export default app;
