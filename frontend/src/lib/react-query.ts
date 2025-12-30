@@ -30,5 +30,9 @@ export const queryClient = new QueryClient({
  * Example: users: { all: ['users'] as const }
  */
 export const queryKeys = {
-  // Add your query keys here
+  bookings: {
+    all: ['bookings'] as const,
+    lists: () => [...queryKeys.bookings.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.bookings.all, 'detail', id] as const,
+  },
 } as const;

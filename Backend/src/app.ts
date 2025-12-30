@@ -2,6 +2,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config/config';
+import bookingRoutes from './Routes/booking.routes';
 
 const app: Application = express();
 
@@ -26,6 +27,9 @@ app.get('/health', (req: Request, res: Response) => {
 app.get('/api', (req: Request, res: Response) => {
   res.status(200).json({ message: 'API is working' });
 });
+
+// Booking routes
+app.use('/api/bookings', bookingRoutes);
 
 // Add your routes here as you create them
 // Example: app.use('/api/users', userRoutes);

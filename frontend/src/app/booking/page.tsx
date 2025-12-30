@@ -1,4 +1,4 @@
-import BookingHeroSection from '@/components/booking/BookingHeroSection';
+import HeroSection from '@/components/ui/HeroSection';
 import BookingForm from '@/components/booking/BookingForm';
 import ContactCard from '@/components/booking/ContactCard';
 import RoomsSection from '@/components/booking/RoomsSection';
@@ -7,7 +7,11 @@ export default function BookingPage() {
   return (
     <main>
       {/* Hero Section */}
-      <BookingHeroSection />
+      <HeroSection 
+        title="Booking" 
+        breadcrumb="Booking" 
+        backgroundImage="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=2070"
+      />
 
       {/* Make An Appointment Section */}
       <section className="py-16 md:py-20 bg-gray-50">

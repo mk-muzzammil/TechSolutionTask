@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import { useCreateBooking } from '@/hooks';
+import { useBookingStore } from '@/store';
 
 // Zod validation schema
 const bookingSchema = z.object({
@@ -21,6 +23,10 @@ const bookingSchema = z.object({
 type BookingFormData = z.infer<typeof bookingSchema>;
 
 export default function BookingForm() {
+  // Get messages from store
+  const { successMessage, errorMessage, backendErrors } = useBookingStore();
+
+  // Form management with react-hook-form and zod
   const {
     register,
     handleSubmit,
@@ -30,15 +36,42 @@ export default function BookingForm() {
     resolver: zodResolver(bookingSchema),
   });
 
+  // Custom hook for booking mutation
+  const { createBooking, isLoading } = useCreateBooking({
+    onSuccess: () => {
+      // Reset form on successful submission
+      reset();
+    },
+  });
+
+  // Handle form submission
   const onSubmit = (data: BookingFormData) => {
-    console.log('Booking Data:', data);
-    // TODO: Send data to backend API
-    alert('Booking submitted successfully!');
-    reset();
+    createBooking(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Success Message */}
+      {successMessage && (
+        <div className="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded">
+          {successMessage}
+        </div>
+      )}
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <p className="font-semibold mb-2">{errorMessage}</p>
+          {backendErrors.length > 0 && (
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              {backendErrors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       {/* First Name and Last Name */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -209,9 +242,10 @@ export default function BookingForm() {
       {/* Submit Button */}
       <Button
         type="submit"
-        className="bg-[#208F6A] hover:bg-[#1a7755] text-white px-8 py-3 font-semibold"
+        disabled={isLoading}
+        className="bg-[#208F6A] hover:bg-[#1a7755] text-white px-8 py-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Book Appointment →
+        {isLoading ? 'Submitting...' : 'Book Appointment →'}
       </Button>
     </form>
   );

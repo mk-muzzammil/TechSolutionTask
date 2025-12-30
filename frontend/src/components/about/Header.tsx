@@ -22,11 +22,11 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <Link href="/" className="hover:text-[#208F6A] transition-colors">
-              Home
+            <Link href="/about" className="hover:text-[#208F6A] transition-colors">
+              About
             </Link>
-            <Link href="/pages" className="hover:text-[#208F6A] transition-colors">
-              Pages
+            <Link href="/booking" className="hover:text-[#208F6A] transition-colors">
+              Booking
             </Link>
             <Link href="/rooms" className="hover:text-[#208F6A] transition-colors">
               Rooms & Suites
@@ -68,11 +68,11 @@ export default function Header() {
         {isMobileMenuOpen && (
           <nav className="lg:hidden py-4 border-t border-white/10">
             <div className="flex flex-col space-y-4">
-              <Link href="/" className="hover:text-[#208F6A] transition-colors py-2">
-                Home
+              <Link href="/about" className="hover:text-[#208F6A] transition-colors py-2">
+                About
               </Link>
-              <Link href="/pages" className="hover:text-[#208F6A] transition-colors py-2">
-                Pages
+              <Link href="/booking" className="hover:text-[#208F6A] transition-colors py-2">
+                Booking
               </Link>
               <Link href="/rooms" className="hover:text-[#208F6A] transition-colors py-2">
                 Rooms & Suites
@@ -86,9 +86,11 @@ export default function Header() {
               <Link href="/contact" className="hover:text-[#208F6A] transition-colors py-2">
                 Contact
               </Link>
-              <Button className="bg-[#208F6A] hover:bg-[#1a7755] text-white w-full">
+              <Link href="/booking">
+              <Button className="bg-[#208F6A] hover:bg-[#1a7755] text-white w-full cursor-pointer">
                 Book Now
               </Button>
+              </Link>
             </div>
           </nav>
         )}

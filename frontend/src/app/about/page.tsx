@@ -1,4 +1,4 @@
-import HeroSection from '@/components/about/HeroSection';
+import HeroSection from '@/components/ui/HeroSection';
 import AboutSection from '@/components/about/AboutSection';
 import StatsSection from '@/components/about/StatsSection';
 import WhyChooseSection from '@/components/about/WhyChooseSection';
@@ -14,7 +14,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      <HeroSection />
+      <HeroSection title="About Us" breadcrumb="About Us" />
       <AboutSection />
       <StatsSection />
       <WhyChooseSection />
