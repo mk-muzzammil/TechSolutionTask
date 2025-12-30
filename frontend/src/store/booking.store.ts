@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import { BookingFormData } from '@/types';
+import { BookingFormData, ValidationError } from '@/types';
 
 interface BookingState {
   // Messages
   successMessage: string;
   errorMessage: string;
-  backendErrors: string[];
+  backendErrors: ValidationError[];
   
   // Form state
   isSubmitting: boolean;
@@ -14,7 +14,7 @@ interface BookingState {
   // Actions
   setSuccessMessage: (message: string) => void;
   setErrorMessage: (message: string) => void;
-  setBackendErrors: (errors: string[]) => void;
+  setBackendErrors: (errors: ValidationError[]) => void;
   clearMessages: () => void;
   setIsSubmitting: (isSubmitting: boolean) => void;
   setCurrentBooking: (booking: BookingFormData | null) => void;

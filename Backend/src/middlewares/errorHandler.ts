@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 
 /**
+ * Validation Error Interface
+ */
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+/**
  * Custom Error class with status code
  */
 export class AppError extends Error {
@@ -16,7 +24,10 @@ export class AppError extends Error {
   }
 }
 
-
+/**
+ * Global error handler middleware
+ * This should be registered AFTER all routes in app.ts
+ */
 export const errorHandler = (
   err: Error | AppError,
   req: Request,
@@ -26,7 +37,7 @@ export const errorHandler = (
   // Default error values
   let statusCode = 500;
   let message = 'Internal Server Error';
-  let errors: string[] | undefined;
+  let errors: ValidationError[] | undefined;
 
   // Check if it's our custom AppError
   if (err instanceof AppError) {
@@ -36,15 +47,27 @@ export const errorHandler = (
     // Mongoose validation error
     statusCode = 400;
     message = 'Validation Error';
-    errors = Object.values((err as any).errors).map((e: any) => e.message);
+    errors = Object.entries((err as any).errors).map(([field, error]: [string, any]) => ({
+      field,
+      message: error.message,
+    }));
   } else if (err.name === 'CastError') {
     // Mongoose bad ObjectId
     statusCode = 400;
     message = 'Invalid ID format';
+    errors = [{
+      field: (err as any).path || 'id',
+      message: 'Invalid ID format',
+    }];
   } else if ((err as any).code === 11000) {
     // Mongoose duplicate key error
     statusCode = 400;
     message = 'Duplicate field value entered';
+    const field = Object.keys((err as any).keyValue)[0];
+    errors = [{
+      field,
+      message: `${field} already exists`,
+    }];
   } else if (err.name === 'JsonWebTokenError') {
     // JWT error
     statusCode = 401;

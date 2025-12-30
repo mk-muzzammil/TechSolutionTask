@@ -1,5 +1,11 @@
 // Common types and interfaces for the application
 
+// Validation Error Type
+export interface ValidationError {
+  field: string;
+  message: string;
+}
+
 // Booking Types
 export interface BookingFormData {
   firstName: string;
@@ -32,7 +38,7 @@ export interface BookingResponse {
   success: boolean;
   message: string;
   data?: Booking;
-  errors?: string[];
+  errors?: ValidationError[];
 }
 
 // API Response Types
@@ -41,7 +47,7 @@ export interface ApiResponse<T> {
   data: T;
   message?: string;
   count?: number;
-  errors?: string[];
+  errors?: ValidationError[];
 }
 
 // Staff Types

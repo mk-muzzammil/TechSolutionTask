@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -8,17 +9,32 @@ import { useCreateBooking } from '@/hooks';
 import { useBookingStore } from '@/store';
 
 // Zod validation schema
-const bookingSchema = z.object({
-  firstName: z.string().min(2, 'First name must be at least 2 characters'),
-  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits'),
-  selectType: z.string().min(1, 'Please select a type'),
-  selectRoom: z.string().min(1, 'Please select a room'),
-  checkIn: z.string().min(1, 'Please select check-in date'),
-  checkOut: z.string().min(1, 'Please select check-out date'),
-  message: z.string().optional(),
-});
+const bookingSchema = z
+  .object({
+    firstName: z.string().min(2, 'First name must be at least 2 characters'),
+    lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+    email: z.string().email('Please enter a valid email address'),
+    phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits'),
+    selectType: z.string().min(1, 'Please select a type'),
+    selectRoom: z.string().min(1, 'Please select a room'),
+    checkIn: z.string().min(1, 'Please select check-in date'),
+    checkOut: z.string().min(1, 'Please select check-out date'),
+    message: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.checkIn && data.checkOut) {
+        const checkInDate = new Date(data.checkIn);
+        const checkOutDate = new Date(data.checkOut);
+        return checkOutDate > checkInDate;
+      }
+      return true;
+    },
+    {
+      message: 'Check-out date must be after check-in date',
+      path: ['checkOut'], // This will associate the error with the checkOut field
+    }
+  );
 
 type BookingFormData = z.infer<typeof bookingSchema>;
 
@@ -32,6 +48,7 @@ export default function BookingForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
   });
@@ -43,6 +60,18 @@ export default function BookingForm() {
       reset();
     },
   });
+
+  // Set backend errors on form fields
+  React.useEffect(() => {
+    if (backendErrors.length > 0) {
+      backendErrors.forEach((error) => {
+        setError(error.field as keyof BookingFormData, {
+          type: 'manual',
+          message: error.message,
+        });
+      });
+    }
+  }, [backendErrors, setError]);
 
   // Handle form submission
   const onSubmit = (data: BookingFormData) => {
@@ -58,17 +87,10 @@ export default function BookingForm() {
         </div>
       )}
 
-      {/* Error Message */}
-      {errorMessage && (
+      {/* Error Message - Only show general error if no specific field errors */}
+      {errorMessage && backendErrors.length === 0 && (
         <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
-          <p className="font-semibold mb-2">{errorMessage}</p>
-          {backendErrors.length > 0 && (
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {backendErrors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          )}
+          <p className="font-semibold">{errorMessage}</p>
         </div>
       )}
 
