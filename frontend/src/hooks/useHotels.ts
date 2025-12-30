@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAllStaff, getStaffById } from '@/services';
+import { getAllHotels, getHotelById } from '@/services';
 import { queryKeys } from '@/lib/react-query';
 
 /**
- * Custom hook for fetching all staff members
+ * Custom hook for fetching all hotels
  * Handles query logic and caching with automatic refetching
  */
-export const useStaff = () => {
+export const useHotels = () => {
   const query = useQuery({
-    queryKey: queryKeys.staff.lists(),
-    queryFn: getAllStaff,
+    queryKey: queryKeys.hotels.lists(),
+    queryFn: getAllHotels,
     staleTime: 30 * 1000, // Data is fresh for 30 seconds
     refetchOnWindowFocus: true, // Refetch when user focuses the window/tab
     refetchInterval: 60 * 1000, // Auto-refetch every 60 seconds
@@ -17,7 +17,7 @@ export const useStaff = () => {
   });
 
   return {
-    staff: query.data?.data || [],
+    hotels: query.data?.data || [],
     count: query.data?.count || 0,
     isLoading: query.isLoading,
     isError: query.isError,
@@ -27,13 +27,13 @@ export const useStaff = () => {
 };
 
 /**
- * Custom hook for fetching a single staff member by ID
+ * Custom hook for fetching a single hotel by ID
  * Includes automatic refetching for real-time updates
  */
-export const useStaffMember = (id: string) => {
+export const useHotel = (id: string) => {
   const query = useQuery({
-    queryKey: queryKeys.staff.detail(id),
-    queryFn: () => getStaffById(id),
+    queryKey: queryKeys.hotels.detail(id),
+    queryFn: () => getHotelById(id),
     enabled: !!id,
     staleTime: 30 * 1000, // Data is fresh for 30 seconds
     refetchOnWindowFocus: true, // Refetch when user focuses the window/tab
@@ -41,7 +41,7 @@ export const useStaffMember = (id: string) => {
   });
 
   return {
-    staffMember: query.data?.data,
+    hotel: query.data?.data,
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,

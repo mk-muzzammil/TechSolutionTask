@@ -52,4 +52,16 @@ export interface Staff {
   image: string;
 }
 
+// Hotel Types
+export interface Hotel {
+  id: string;
+  title: string;
+  price: number;
+  guests: number;
+  beds: number;
+  bath: number;
+  image: string;
+  description: string;
+}
+
 // Add your custom types here as needed

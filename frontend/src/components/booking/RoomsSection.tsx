@@ -1,42 +1,38 @@
-import RoomCard from './RoomCard';
+'use client';
 
-const rooms = [
-  {
-    id: 1,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070',
-    title: 'Deluxe Rooms',
-    price: 640,
-    guests: 3,
-    beds: 2,
-    bath: 1,
-    description:
-      'There are many variations of passages of Lorem Ipsum available, but the majority have suffered.',
-  },
-  {
-    id: 2,
-    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=2070',
-    title: 'Junior Rooms',
-    price: 640,
-    guests: 2,
-    beds: 1,
-    bath: 1,
-    description:
-      'There are many variations of passages of Lorem Ipsum available, but the majority have suffered.',
-  },
-  {
-    id: 3,
-    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=2074',
-    title: 'Family Rooms',
-    price: 820,
-    guests: 4,
-    beds: 2,
-    bath: 1,
-    description:
-      'There are many variations of passages of Lorem Ipsum available, but the majority have suffered.',
-  },
-];
+import RoomCard from './RoomCard';
+import { useHotels } from '@/hooks';
 
 export default function RoomsSection() {
+  // Fetch hotels data from backend
+  const { hotels, isLoading, isError } = useHotels();
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <section className="py-16 md:py-20 bg-[#208F6A]">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-white">
+            <p>Loading rooms...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <section className="py-16 md:py-20 bg-[#208F6A]">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-white">
+            <p>Failed to load rooms. Please try again later.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 md:py-20 bg-[#208F6A]">
       <div className="container mx-auto px-4">
@@ -52,7 +48,7 @@ export default function RoomsSection() {
 
         {/* Room Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {rooms.map((room) => (
+          {hotels.map((room) => (
             <RoomCard key={room.id} {...room} />
           ))}
         </div>

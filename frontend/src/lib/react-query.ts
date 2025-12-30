@@ -40,4 +40,9 @@ export const queryKeys = {
     lists: () => [...queryKeys.staff.all, 'list'] as const,
     detail: (id: string) => [...queryKeys.staff.all, 'detail', id] as const,
   },
+  hotels: {
+    all: ['hotels'] as const,
+    lists: () => [...queryKeys.hotels.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.hotels.all, 'detail', id] as const,
+  },
 } as const;
